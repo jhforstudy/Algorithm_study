@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 #define _CRT_SECURE_NO_WARNINGS
 
 enum Color {
@@ -28,7 +29,6 @@ struct node create_nil = {
   .left = NULL,
   .right = NULL,
   .parent = NULL,
-  .key = NULL
 };
 struct node* nil = &create_nil;
 
@@ -76,7 +76,6 @@ struct rbtree* newRBtree() {
 	struct rbtree* tree = malloc(sizeof(struct rbtree));
 	struct node* temp_nil = malloc(sizeof(struct node));
 
-	temp_nil->key = NULL;
 	temp_nil->left = NULL;
 	temp_nil->right = NULL;
 	temp_nil->parent = NULL;
