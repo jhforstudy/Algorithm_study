@@ -9,7 +9,7 @@ struct node {
 
 struct bucket {
 	struct node* head;
-	int num;	// ÇØ´ç indexÀÇ data °³¼ö
+	int num;	// í•´ë‹¹ indexì˜ data ê°œìˆ˜
 };
 
 struct bucket* hashTable_1 = NULL;
@@ -21,13 +21,13 @@ int size_2 = 7;
 int size_3 = 13;
 
 struct node* createNode(int key) {
-	// º¯¼ö ¼±¾ğ
+	// ë³€ìˆ˜ ì„ ì–¸
 	struct node* new_node;
 	
-	// ¸Ş¸ğ¸® ÇÒ´ç
+	// ë©”ëª¨ë¦¬ í• ë‹¹
 	new_node = (struct node*)malloc(sizeof(struct node));
 
-	// key, next_node ÃÊ±âÈ­
+	// key, next_node ì´ˆê¸°í™”
 	new_node->key = key;
 	new_node->next_node = NULL;
 
@@ -39,22 +39,22 @@ int hash_function(int key, int size) {
 }
 
 void insert(struct bucket* B, int key, int size) {
-	// hash °è»ê
+	// hash ê³„ì‚°
 	int hash_index = hash_function(key, size);
 
-	// node »ı¼º
+	// node ìƒì„±
 	struct node* new_node = createNode(key);
 
-	// ¸¸¾à ÇØ´ç index¿¡ ¾Æ¹«°Íµµ ¾øÀ¸¸é, head¿¡ Ãß°¡
+	// ë§Œì•½ í•´ë‹¹ indexì— ì•„ë¬´ê²ƒë„ ì—†ìœ¼ë©´, headì— ì¶”ê°€
 	if (B[hash_index].num == 0) {
 		B[hash_index].num = 1;
 		B[hash_index].head = new_node;
 	}
 
-	// ¾Æ´Ï¸é, ÇØ´ç headÀÇ next¿¡ Ãß°¡
+	// ì•„ë‹ˆë©´, í•´ë‹¹ headì˜ nextì— ì¶”ê°€
 	else {
-		new_node->next_node = B[hash_index].head;	// new_nodeÀÇ next¸¦ ÇØ´ç hash indexÀÇ head·Î µÎ°í
-		B[hash_index].head = new_node;	// new_node¸¦ ÇØ´ç hash indexÀÇ head·Î.
+		new_node->next_node = B[hash_index].head;	// new_nodeì˜ nextë¥¼ í•´ë‹¹ hash indexì˜ headë¡œ ë‘ê³ 
+		B[hash_index].head = new_node;	// new_nodeë¥¼ í•´ë‹¹ hash indexì˜ headë¡œ.
 		B[hash_index].num++;
 	}
 
@@ -69,15 +69,15 @@ void print(struct bucket* B, int size) {
 	for (int i = 0; i < size; i++) {
 		struct node* temp = B[i].head;
 		printf("Bucket[%d]: ", i);
-		// next_node°¡ ¾øÀ» ¶§±îÁö ÇØ´ç hash indexÀÇ °¢ ¿ø¼Ò Ãâ·Â
+		// next_nodeê°€ ì—†ì„ ë•Œê¹Œì§€ í•´ë‹¹ hash indexì˜ ê° ì›ì†Œ ì¶œë ¥
 		while (temp != NULL) {
 			printf("%d -> ", temp->key);
 
-			// ´ÙÀ½ ³ëµå·Î ÀÌµ¿
+			// ë‹¤ìŒ ë…¸ë“œë¡œ ì´ë™
 			temp = temp->next_node;
 		}
 
-		// Á¦ÀÏ ÀÛÀº ±æÀÌÀÎÁö °Ë»ç
+		// ì œì¼ ì‘ì€ ê¸¸ì´ì¸ì§€ ê²€ì‚¬
 
 		if (B[i].num <= shortest_len) {
 			shortest_len = B[i].num;
@@ -113,14 +113,14 @@ int main() {
 	int rand_int;
 
 	// Table 1
-	// memory ÇÒ´ç, num º¯¼ö ÃÊ±âÈ­
+	// memory í• ë‹¹, num ë³€ìˆ˜ ì´ˆê¸°í™”
 	hashTable_1 = (struct bucket*)malloc(size_1 * sizeof(struct bucket));
 	for (int i = 0; i < size_1; i++) {
 		hashTable_1[i].num = 0;
 	}
-	// identical value ´ëÀÔÀ» À§ÇÑ Ã¼Å©¿ë ¸®½ºÆ®
+	// identical value ëŒ€ì…ì„ ìœ„í•œ ì²´í¬ìš© ë¦¬ìŠ¤íŠ¸
 	int* check_list_1 = (int*)malloc(50 * sizeof(int));
-	// ¼ıÀÚ »ğÀÔ
+	// ìˆ«ì ì‚½ì…
 	for (int i = 0; i < 50; i++) {
 		do {
 			rand_int = rand() % 1000;
@@ -131,19 +131,19 @@ int main() {
 	// print
 	printf("Hash Table 1\n\n");
 	print(hashTable_1, size_1);
-	// memory ¹İ³³
+	// memory ë°˜ë‚©
 	free(hashTable_1);
 	free(check_list_1);
 
 	// Table 2
-	// memory ÇÒ´ç, num º¯¼ö ÃÊ±âÈ­
+	// memory í• ë‹¹, num ë³€ìˆ˜ ì´ˆê¸°í™”
 	hashTable_2 = (struct bucket*)malloc(size_2 * sizeof(struct bucket));
 	for (int i = 0; i < size_2; i++) {
 		hashTable_2[i].num = 0;
 	}
-	// identical value ´ëÀÔÀ» À§ÇÑ Ã¼Å©¿ë ¸®½ºÆ®
+	// identical value ëŒ€ì…ì„ ìœ„í•œ ì²´í¬ìš© ë¦¬ìŠ¤íŠ¸
 	int* check_list_2 = (int*)malloc(50 * sizeof(int));
-	// ¼ıÀÚ »ğÀÔ
+	// ìˆ«ì ì‚½ì…
 	for (int i = 0; i < 50; i++) {
 		do {
 			rand_int = rand() % 1000;
@@ -154,20 +154,20 @@ int main() {
 	// print
 	printf("Hash Table 2\n\n");
 	print(hashTable_2, size_2);
-	// memory ¹İ³³
+	// memory ë°˜ë‚©
 	free(hashTable_2);
 	free(check_list_2);
 
 	// Table 3
-	// memory ÇÒ´ç, num º¯¼ö ÃÊ±âÈ­
+	// memory í• ë‹¹, num ë³€ìˆ˜ ì´ˆê¸°í™”
 	hashTable_3 = (struct bucket*)malloc(size_3 * sizeof(struct bucket));
-	// memory ÇÒ´ç, num º¯¼ö ÃÊ±âÈ­
+	// memory í• ë‹¹, num ë³€ìˆ˜ ì´ˆê¸°í™”
 	for (int i = 0; i < size_3; i++) {
 		hashTable_3[i].num = 0;
 	}
-	// identical value ´ëÀÔÀ» À§ÇÑ Ã¼Å©¿ë ¸®½ºÆ®
+	// identical value ëŒ€ì…ì„ ìœ„í•œ ì²´í¬ìš© ë¦¬ìŠ¤íŠ¸
 	int* check_list_3 = (int*)malloc(50 * sizeof(int));
-	// ¼ıÀÚ »ğÀÔ
+	// ìˆ«ì ì‚½ì…
 	for (int i = 0; i < 50; i++) {
 		do {
 			rand_int = rand() % 1000;
@@ -178,7 +178,7 @@ int main() {
 	// print
 	printf("Hash Table 3\n\n");
 	print(hashTable_3, size_3);
-	// memory ¹İ³³
+	// memory ë°˜ë‚©
 	free(hashTable_3);
 	free(check_list_3);
 
